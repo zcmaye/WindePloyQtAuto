@@ -1,13 +1,15 @@
-#include "guiwidget.h"
+﻿#include "guiwidget.h"
 #include<QFileDialog>
 #include<QFile>
 #include<QTextStream>
 
 GuiWidget::GuiWidget(QWidget *parent)
     : QWidget(parent)
-{
-    this->initUi();
+{   
     this->setFixedSize(640,480);
+    this->initUi();
+
+
     QFile read("://css/style.css");
     if(read.open(QIODevice::ReadOnly))
     {
@@ -15,7 +17,6 @@ GuiWidget::GuiWidget(QWidget *parent)
         this->setStyleSheet(stream.readAll());
         read.close();
     }
-
 
 }
 
@@ -66,14 +67,27 @@ void GuiWidget::initUi()
     cBox_version = new QComboBox(this);
     cBox_kits = new QComboBox(this);
 
-    cBox_version->move(150,20);
-    cBox_kits->move(150,80);
-
-    btn_deploy = new QPushButton("生成",this);
-    btn_deploy->move(this->width()-200,this->height()-100);
+    label_version = new QLabel("选择Qt版本",this);
+    label_kits = new QLabel("选择编译套件",this);
 
     btn_openFile = new QPushButton("选择要打包的exe",this);
-    btn_openFile->move(this->width()/2,this->height()/2);
+    btn_deploy = new QPushButton("生成",this);
+
+    cBox_version->setGeometry(250,20,this->width()-280,35);
+    cBox_kits->setGeometry(250,cBox_version->height()+25,this->width()-280,35);
+
+    label_version->setGeometry(50,cBox_version->y(),200,35);
+    label_kits->setGeometry(50,cBox_kits->y(),200,35);
+
+
+    btn_openFile->setFixedSize(200,35);
+    int x = (this->width()-btn_openFile->width())/2;
+    int y = (this->height() - btn_openFile->height())/2;
+    btn_openFile->move(x,y);
+
+    btn_deploy->setFixedSize(200,35);
+    int x1 = (this->width()-btn_deploy->width())/2;
+    btn_deploy->move(x1,this->height()-btn_deploy->height()-20);
 
     //先设置版本
     cBox_versionAddItems();

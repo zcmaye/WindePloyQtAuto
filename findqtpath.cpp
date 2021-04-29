@@ -1,4 +1,4 @@
-#include "findqtpath.h"
+﻿#include "findqtpath.h"
 #include<QProcess>
 FindQtPath::FindQtPath()
 {
@@ -82,7 +82,10 @@ bool FindQtPath::ApplicationPackage(const QString& windeployqt,const QString &ex
     }
     if(process.waitForFinished())
     {
-         cout<<"[result output]"<<process.readAllStandardOutput().toStdString().data();
+        cout<<"[esult output]"<<process.errorString()<<" "<<process.exitCode()<<"  "
+           <<process.exitStatus()<<" "<<process.error();
     }
+    cout<<"[result output]"<<process.readAllStandardOutput().toStdString().data();
+    cout<<"[process start error]"<<process.readAllStandardError().toStdString().data();
     return true;
 }
