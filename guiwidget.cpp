@@ -6,10 +6,13 @@
 GuiWidget::GuiWidget(QWidget *parent)
     : QWidget(parent)
 {   
+    this->setWindowFlags(Qt::WindowStaysOnTopHint);
     this->setFixedSize(640,480);
     this->initUi();
     this->setMouseTracking(true);
     this->setAcceptDrops(true);         //设置窗口支持拖拽
+    this->setWindowTitle("Qt快速打包——公众号:C语言Plus");
+    this->setWindowIcon(QIcon("://image/icon.png"));
 
     QFile read("://css/style.css");
     if(read.open(QIODevice::ReadOnly))
@@ -101,6 +104,11 @@ void GuiWidget::initUi()
     btn_deploy->setFixedSize(200,35);
     int x1 = (this->width()-btn_deploy->width())/2;
     btn_deploy->move(x1,this->height()-btn_deploy->height()-20);
+    //此处如果再style.css中设置无效，为啥？QPushButton#btn_deploy:hover{}
+    btn_deploy->setStyleSheet("QPushButton:hover\
+    {\
+       background-color: aquamarine;\
+    }");
 
     //先设置版本
     cBox_versionAddItems();
