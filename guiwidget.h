@@ -7,6 +7,10 @@
 #include<QPushButton>
 #include"findqtpath.h"
 
+#include<QDragEnterEvent>
+#include<QDropEvent>
+#include<QMimeData>
+
 class GuiWidget : public QWidget
 {
     Q_OBJECT
@@ -14,6 +18,10 @@ class GuiWidget : public QWidget
 public:
     GuiWidget(QWidget *parent = nullptr);
     ~GuiWidget();
+    // exe拖到窗口
+    void dragEnterEvent(QDragEnterEvent *event) override;
+    void dropEvent(QDropEvent *event) override;
+
     void cBox_versionAddItems();
     void cBox_kitsAddItems(const QString& qtVer);
 private slots:

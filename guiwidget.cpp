@@ -8,7 +8,8 @@ GuiWidget::GuiWidget(QWidget *parent)
 {   
     this->setFixedSize(640,480);
     this->initUi();
-
+    this->setMouseTracking(true);
+    this->setAcceptDrops(true);         //设置窗口支持拖拽
 
     QFile read("://css/style.css");
     if(read.open(QIODevice::ReadOnly))
@@ -22,6 +23,18 @@ GuiWidget::GuiWidget(QWidget *parent)
 
 GuiWidget::~GuiWidget()
 {
+}
+
+void GuiWidget::dragEnterEvent(QDragEnterEvent *event)
+{
+    event->acceptProposedAction();
+}
+
+void GuiWidget::dropEvent(QDropEvent *event)
+{
+   deployfilePath = event->mimeData()->urls().first().path();
+   deployfilePath.remove(0,1);
+   cout<<deployfilePath;
 }
 
 void GuiWidget::cBox_versionAddItems()
@@ -70,7 +83,7 @@ void GuiWidget::initUi()
     label_version = new QLabel("选择Qt版本",this);
     label_kits = new QLabel("选择编译套件",this);
 
-    btn_openFile = new QPushButton("选择要打包的exe",this);
+    btn_openFile = new QPushButton("拖拽/选择要打包的exe",this);
     btn_deploy = new QPushButton("生成",this);
 
     cBox_version->setGeometry(250,20,this->width()-280,35);
@@ -80,7 +93,7 @@ void GuiWidget::initUi()
     label_kits->setGeometry(50,cBox_kits->y(),200,35);
 
 
-    btn_openFile->setFixedSize(200,35);
+    btn_openFile->setFixedSize(550,260);
     int x = (this->width()-btn_openFile->width())/2;
     int y = (this->height() - btn_openFile->height())/2;
     btn_openFile->move(x,y);

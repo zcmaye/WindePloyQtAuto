@@ -16,13 +16,7 @@ GuiWidget
 {
     background-color: white;
 }
-QComboBox
-{
-    /* background-color: bisque; */
-
-
-}
 QPushButton
 {
-    /* background-color: aquamarine; */
+    border-style:dotted;
 }
